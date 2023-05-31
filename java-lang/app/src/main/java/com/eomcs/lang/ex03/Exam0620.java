@@ -33,3 +33,10 @@ public class Exam0620 {
   }
 }
 
+
+// Hello,world!
+// 나이:20
+// false<== 재직자 여부
+// 성별:여
+// 키:170.5
+

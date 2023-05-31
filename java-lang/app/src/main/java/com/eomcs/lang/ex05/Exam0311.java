@@ -5,7 +5,7 @@ package com.eomcs.lang.ex05;
 public class Exam0311 {
   public static void main(String[] args) {
     // boolean 타입이 아닌 데이터 타입에 대해서는 사용할 수 없다.
-    //    System.out.println(0 && 1); // 컴파일 오류!
+        System.out.println(0 && 1); // 컴파일 오류!
     //    System.out.println(0 || 1); // 컴파일 오류!
     //    System.out.println(!0); // 컴파일 오류!
 

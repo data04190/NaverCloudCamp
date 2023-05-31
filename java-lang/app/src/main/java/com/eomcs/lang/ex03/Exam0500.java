@@ -28,6 +28,19 @@ public class Exam0500 {
   }
 }
 
+// true
+// false
+// true
+// false
+// false
+// true
+// true
+// false
+
+
+
+
+
 //# 논리 값을 메모리에 저장할 때 크기
 //- 4바이트 int 메모리에 저장한다. (JVM 명세서 참조)
 //- 배열 값인 경우 1바이트 메모리에 저장한다. (JVM 명세서 참조)
