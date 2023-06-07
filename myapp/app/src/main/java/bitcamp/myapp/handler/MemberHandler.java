@@ -103,6 +103,42 @@ public class MemberHandler {
     }
   }
 
+  public static void deleteMember() {
+
+    int memberNo = Prompt.inputInt("번호? ");
+
+    int deletedIndex = indexOf(memberNo);
+    if (deletedIndex == -1) {
+      System.out.println("해당 번호의 회원이 없습니다!");
+      return;
+    }
+
+    for (int i = deletedIndex; i < length - 1; i++) {
+      no[i] = no[i + 1];
+      name[i] = name[i + 1];
+      email[i] = email[i + 1];
+      password[i] = password[i + 1];
+      gender[i] = gender[i + 1];
+    }
+
+    no[length - 1] = 0;
+    name[length - 1] = null;
+    email[length - 1] = null;
+    password[length - 1] = null;
+    gender[length - 1] = (char) 0;
+
+    length--;
+  }
+
+  private static int indexOf(int memberNo) {
+    for (int i = 0; i < length; i++) {
+      if (no[i] == memberNo) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   private static boolean available() {
     return length < MAX_SIZE;
   }
