@@ -23,6 +23,8 @@ public class App {
         MemberHandler.printMembers();
       } else if (menuNo.equals("3")) {
         MemberHandler.viewMember();
+      } else if (menuNo.equals("4")) {
+        MemberHandler.updateMember();
       } else {
         System.out.println(menuNo);
       }
