@@ -51,8 +51,25 @@ public class MemberHandler {
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < length; i++) {
-      System.out.printf("%d, %s, %s, %c\n", no[i], name[i], email[i], gender[i]);
+      System.out.printf("%d, %s, %s, %s\n",
+          no[i], name[i], email[i],
+          gender[i] == 'M' ? "남성" : "여성");
     }
+  }
+
+  public static void viewMember() {
+    String memberNo = Prompt.inputString("번호? ");
+    // 입력 받은 번호를 가지고 배열에서 해당 넘버를 찾아야 한다.
+    for (int i = 0; i < length; i++) {
+      if (no[i] == Integer.parseInt(memberNo)) {
+        System.out.printf("이름: %s\n", name[i]);
+        System.out.printf("이메일: %s\n", email[i]);
+        System.out.printf("성별: %s\n", gender[i] == 'M' ? "남성" : "여성");
+        // i번째 항목에 저장된 회원 정보 출력
+        return;
+      }
+    }
+    System.out.println("해당 번호의 회원이 없습니다!");
   }
 
   public static boolean available() {

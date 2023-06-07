@@ -12,28 +12,22 @@ public class App {
     printMenu();
 
     while (true) {
-      String menuNo = Prompt.inputString("> ");
+      String menuNo = Prompt.inputString("메인> ");
       if (menuNo.equals("6")) {
         break;
       } else if (menuNo.equals("menu")) {
         printMenu();
+      } else if (menuNo.equals("1")) {
+        MemberHandler.inputMember();
+      } else if (menuNo.equals("2")) {
+        MemberHandler.printMembers();
+      } else if (menuNo.equals("3")) {
+        MemberHandler.viewMember();
       } else {
         System.out.println(menuNo);
       }
     }
-
-    // // 회원정보 등록
-    // while (MemberHandler.available()) {
-    // MemberHandler.inputMember();
-    // if (!promptContinue()) {
-    // break;
-    // }
-    // }
-
-    // MemberHandler.printMembers();
-
     Prompt.close();
-
   }
 
   static void printMenu() {
