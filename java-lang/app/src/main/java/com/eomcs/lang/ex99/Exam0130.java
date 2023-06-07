@@ -14,25 +14,31 @@ public class Exam0130 {
     // Y : 날짜 및 시각 데이터에서 년도를 추출하여 4자리로 표현한다.
     // y : 날짜 및 시각 데이터에서 년도를 추출하여 뒤의 2자리로 표현한다.
     System.out.printf("%1$tY, %1$ty\n", today);
+    // 2023, 23
 
     // B : 날짜 및 시각 데이터에서 월을 추출하여 전체 이름으로 표현한다. ex) January
     // b : 날짜 및 시각 데이터에서 월을 추출하여 단축 이름으로 표현한다. ex) Jan
     System.out.printf("%1$tB, %1$tb\n", today);
+    // 5월, 5월
 
     // m : 날짜 및 시각 데이터에서 월을 추출하여 2자리 숫자로 표현한다. ex) 12, 01
     System.out.printf("%1$tm\n", today);
+    // 05
 
     // d : 날짜 및 시각 데이터에서 일을 추출하여 2자리 숫자로 표현한다. ex) 01, 22
     // e : 날짜 및 시각 데이터에서 일을 추출하여 1자리 숫자로 표현한다. ex) 1, 22
     System.out.printf("%1$td %1$te\n", today);
+    // 30 30
 
     // A : 날짜 및 시각 데이터에서 요일을 추출하여 긴 이름으로 표현한다. ex) Sunday
     // a : 날짜 및 시각 데이터에서 요일을 추출하여 짧은 이름으로 표현한다. ex) Sun
     System.out.printf("%1$tA %1$ta\n", today);
+    // 화요일 화
 
     // H : 날짜 및 시각 데이터에서 시각을 추출하여 24시로 표현한다.
     // I : 날짜 및 시각 데이터에서 시각을 추출하여 12시로 표현한다.
     System.out.printf("%1$tH %1$tI\n", today);
+    
 
     // M : 날짜 및 시각 데이터에서 시각을 추출하여 분을 표현한다.
     System.out.printf("%1$tM\n", today);
@@ -53,6 +59,8 @@ public class Exam0130 {
   }
 }
 
+
+//
 
 
 

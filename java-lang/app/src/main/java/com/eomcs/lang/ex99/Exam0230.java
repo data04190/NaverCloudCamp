@@ -2,6 +2,7 @@ package com.eomcs.lang.ex99;
 
 //# 키보드 입력 받기 - int, float, boolean 값 읽기
 //
+
 public class Exam0230 {
   public static void main(String[] args) { 
     java.util.Scanner keyScan = new java.util.Scanner(System.in);

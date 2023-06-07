@@ -30,6 +30,8 @@ public class Exam0340 {
     System.out.println(987654321123456.7);
     System.out.println("----------------------------");
 
+
+
     //유효자릿수가 16자리를 넘어가는 경우 값이 잘려서 저장될 수 있다.
     System.out.println(987654321.12345678);
     System.out.println(9.8765432112345678);

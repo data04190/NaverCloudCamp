@@ -14,3 +14,8 @@ public class Exam0330 {
     System.out.println(Double.MIN_VALUE);
   }
 }
+
+// 3.4028235E38
+// 1.4E-45
+// 1.79769313486231
+// 4.9E-324

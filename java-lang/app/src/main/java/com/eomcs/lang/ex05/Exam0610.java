@@ -6,8 +6,10 @@ public class Exam0610 {
 
   static void f1(int x, int y) {
     int b = 5;
-    b = b + 1;
-    System.out.println(b);
+    //int temp = b;
+    //b += 1;
+    //System.out.println(temp);
+    System.out.println(b++);
   }
 
   public static void main(String[] args) {

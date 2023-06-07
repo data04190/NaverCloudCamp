@@ -34,3 +34,11 @@ public class Exam0430 {
     System.out.println((char)('각' - 1));
   }
 }
+
+// A
+// A
+// 65
+// 44034
+// 44032
+// 갂
+// 가
