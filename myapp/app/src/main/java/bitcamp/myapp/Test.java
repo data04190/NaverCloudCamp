@@ -9,21 +9,22 @@ public class Test {
     // 3 - 1 * 7 + 15 / 3 = ?
     // => 연산자 우선 순위를 고려하지 않고 앞에서부터 뒤로 순차적으로 계산한다.
 
-    Calculator.init(2);
-    Calculator.multiple(3);
-    Calculator.plus(7);
-    Calculator.minus(2);
-    Calculator.divide(2);
+    Calculator c1 = new Calculator();
+    Calculator c2 = new Calculator();
 
-    System.out.println(Calculator.getResult());
+    Calculator.init(c1, 2);
+    Calculator.init(c2, 3);
+    Calculator.multiple(c1, 3);
+    Calculator.minus(c2, 1);
+    Calculator.plus(c1, 7);
+    Calculator.multiple(c2, 7);
+    Calculator.minus(c1, 2);
+    Calculator.plus(c2, 15);
+    Calculator.divide(c1, 2);
+    Calculator.divide(c2, 3);
 
-    Calculator.init(3);
-    Calculator.minus(1);
-    Calculator.multiple(7);
-    Calculator.plus(15);
-    Calculator.divide(3);
-
-    System.out.println(Calculator.getResult());
+    System.out.println(Calculator.getResult(c1));
+    System.out.println(Calculator.getResult(c2));
 
   }
 
