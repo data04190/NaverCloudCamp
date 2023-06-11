@@ -1,6 +1,9 @@
-package bitcamp.myapp;
+package bitcamp.test.step02;
 
-public class Test {
+// 1) 낱개의 변수 사용
+// 2) 낱개의 변수 재사용
+public class App {
+  
   public static void main(String[] args) {
     String name;
     int kor;
@@ -35,6 +38,7 @@ public class Test {
     aver = sum / 3f;
 
     System.out.printf("%s: 합계=%d, 평균=%.1f\n", name, sum, aver);
+
 
   }
 
