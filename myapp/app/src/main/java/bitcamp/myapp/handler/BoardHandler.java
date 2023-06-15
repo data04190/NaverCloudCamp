@@ -12,13 +12,49 @@ public class BoardHandler {
   private Prompt prompt;
   private Board[] boards = new Board[MAX_SIZE];
   private int length = 0;
+  private String title;
 
-  public BoardHandler(Prompt prompt) {
+  public BoardHandler(Prompt prompt, String title) {
     this.prompt = prompt;
+    this.title = title;
+  }
+
+  public void service() {
+    printMenu();
+
+    while (true) {
+      String boardNo = prompt.inputString("%s> ", this.title);
+      if (boardNo.equals("0")) {
+        return;
+      } else if (boardNo.equals("menu")) {
+        printMenu();
+      } else if (boardNo.equals("1")) {
+        this.inputBoard();
+      } else if (boardNo.equals("2")) {
+        this.printBoards();
+      } else if (boardNo.equals("3")) {
+        this.viewBoard();
+      } else if (boardNo.equals("4")) {
+        this.updateBoard();
+      } else if (boardNo.equals("5")) {
+        this.deleteBoard();
+      } else {
+        System.out.println("게시판 번호가 옳지 않습니다!");
+      }
+    }
+  }
+
+  private static void printMenu() {
+    System.out.println("1. 등록");
+    System.out.println("2. 목록");
+    System.out.println("3. 조회");
+    System.out.println("4. 변경");
+    System.out.println("5. 삭제");
+    System.out.println("0. 메인");
   }
 
   // 인스턴스 멤버(필드나 메서드)를 사용하는 경우 인스턴스 메서드로 정의해야 한다.
-  public void inputBoard() {
+  private void inputBoard() {
     if (!this.available()) {
       System.out.println("더이상 입력할 수 없습니다!");
       return;
@@ -33,7 +69,7 @@ public class BoardHandler {
     this.boards[this.length++] = board;
   }
 
-  public void printBoards() {
+  private void printBoards() {
 
     System.out.println("---------------------------------------");
     System.out.println("번호, 제목, 작성자, 조회수, 등록일");
@@ -48,7 +84,7 @@ public class BoardHandler {
     }
   }
 
-  public void viewBoard() {
+  private void viewBoard() {
     String boardNo = this.prompt.inputString("번호? ");
 
     // 입력 받은 번호를 가지고 배열에서 해당 넘버를 찾아야 한다.
@@ -70,7 +106,7 @@ public class BoardHandler {
     System.out.println("해당 번호의 게시글이 없습니다!");
   }
 
-  public void updateBoard() {
+  private void updateBoard() {
 
     String boardNo = this.prompt.inputString("번호? ");
     for (int i = 0; i < this.length; i++) {
@@ -90,7 +126,7 @@ public class BoardHandler {
     System.out.println("해당 번호의 게시글이 없습니다!");
   }
 
-  public void deleteBoard() {
+  private void deleteBoard() {
 
     int deletedIndex = indexOf(this.prompt.inputInt("번호? "));
     if (deletedIndex == -1) {

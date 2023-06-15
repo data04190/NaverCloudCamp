@@ -6,21 +6,52 @@ import bitcamp.util.Prompt;
 public class MemberHandler {
 
   private static final int MAX_SIZE = 100;
-  // variable initializer(변수초기화 문장) => static 블록으로 이동
-  // 단 final 변수는 static 블록에서 값을 할당하지 않고 그냥 상수로 취급
 
   private Prompt prompt;
   private Member[] members = new Member[MAX_SIZE]; // variable initializer(변수초기화 문장)
   private int length;
+  private String title;
 
-  // 생성자: 인스턴스를 사용할 수 있도록 유효한 값으로 초기화시키는 일을 한다.
-  // =>필요한 값을 외부에서 받고 싶으면 파라미터를 선언하라.
-  public MemberHandler(Prompt prompt) {
+  public MemberHandler(Prompt prompt, String title) {
     this.prompt = prompt;
+    this.title = title;
   }
 
+  public void execute() {
+    printMenu();
 
-  public void inputMember() {
+    while (true) {
+      String menuNo = prompt.inputString("%s> ", this.title);
+      if (menuNo.equals("0")) {
+        return;
+      } else if (menuNo.equals("menu")) {
+        printMenu();
+      } else if (menuNo.equals("1")) {
+        this.inputMember();
+      } else if (menuNo.equals("2")) {
+        this.printMembers();
+      } else if (menuNo.equals("3")) {
+        this.viewMember();
+      } else if (menuNo.equals("4")) {
+        this.updateMember();
+      } else if (menuNo.equals("5")) {
+        this.deleteMember();
+      } else {
+        System.out.println("메뉴 번호가 옳지 않습니다!");
+      }
+    }
+  }
+
+  private static void printMenu() {
+    System.out.println("1. 등록");
+    System.out.println("2. 목록");
+    System.out.println("3. 조회");
+    System.out.println("4. 변경");
+    System.out.println("5. 삭제");
+    System.out.println("0. 메인");
+  }
+
+  private void inputMember() {
 
     if (!this.available()) {
       System.out.println("더이상 입력할 수 없습니다!");
