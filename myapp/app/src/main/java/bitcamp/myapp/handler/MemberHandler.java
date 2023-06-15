@@ -58,9 +58,7 @@ public class MemberHandler implements Handler {
     m.setPassword(this.prompt.inputString("암호? "));
     m.setGender(inputGender((char) 0));
 
-    if (!this.list.add(m)) {
-      System.out.println("입력 실패입니다.");
-    }
+    this.list.add(m);
   }
 
   private void printMembers() {

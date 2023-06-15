@@ -57,9 +57,8 @@ public class BoardHandler implements Handler {
     board.setWriter(this.prompt.inputString("작성자? "));
     board.setPassword(this.prompt.inputString("암호? "));
 
-    if (!this.list.add(board)) {
-      System.out.println("입력 실패입니다.");
-    }
+    this.list.add(board);
+
   }
 
   private void printBoards() {
@@ -83,7 +82,7 @@ public class BoardHandler implements Handler {
     Board board = this.list.get(boardNo);
 
     if (board == null) {
-      System.out.println("해당 번호의 회원이 없습니다!");
+      System.out.println("해당 번호의 게시글이 없습니다!");
       return;
     }
 
@@ -114,58 +113,11 @@ public class BoardHandler implements Handler {
   }
 
 
-  // private void updateBoard() {
-  //
-  // String boardNo = this.prompt.inputString("번호? ");
-  // for (int i = 0; i < this.length; i++) {
-  // Board board = this.boards[i];
-  // if (board.getNo() == Integer.parseInt(boardNo)) {
-  // if (!this.prompt.inputString("비밀번호? ").equals(board.getPassword())) {
-  // System.out.println("암호가 일치하지 않습니다");
-  // return;
-  // }
-  // board.setTitle(this.prompt.inputString("제목(%s)? ", board.getTitle()));
-  // board.setContent(this.prompt.inputString("내용(%s)? ", board.getContent()));
-  // System.out.println("수정되었습니다.");
-  // return;
-  //
-  // }
-  // }
-  // System.out.println("해당 번호의 게시글이 없습니다!");
-  // }
-
   private void deleteBoard() {
-    int boardNo = this.prompt.inputInt("번호? ");
 
-    Board board = this.list.get(boardNo);
-
-    if (!this.prompt.inputString("비밀번호? ").equals(board.getPassword())) {
-      System.out.println("암호가 일치하지 않습니다");
-      return;
-    }
-
-
-    if (!this.list.delete(boardNo)) {
+    if (!this.list.delete(this.prompt.inputInt("번호? "))) {
       System.out.println("해당 번호의 게시글이 없습니다!");
     }
   }
-
-  // private void deleteBoard() {
-  //
-  // int deletedIndex = indexOf(this.prompt.inputInt("번호? "));
-  // if (deletedIndex == -1) {
-  // System.out.println("해당 번호의 게시글이 없습니다!");
-  // return;
-  // }
-  //
-  // for (int i = deletedIndex; i < this.length - 1; i++) {
-  // this.boards[i] = this.boards[i + 1];
-  // }
-  // this.boards[--this.length] = null;
-  //
-  //
-  // }
-
-
 
 }
