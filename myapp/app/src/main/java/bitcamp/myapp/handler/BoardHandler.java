@@ -3,7 +3,7 @@ package bitcamp.myapp.handler;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
 
-public class BoardHandler {
+public class BoardHandler implements Handler {
 
   // 인스턴스에 상관없이 공통으로 사용하는 필드라면 스태틱 필드로 선언한다.
   private static final int MAX_SIZE = 100;
@@ -19,7 +19,8 @@ public class BoardHandler {
     this.title = title;
   }
 
-  public void service() {
+
+  public void execute() {
     printMenu();
 
     while (true) {
