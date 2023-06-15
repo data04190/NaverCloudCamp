@@ -3,7 +3,8 @@ package bitcamp.myapp.handler;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.Prompt;
 
-public class MemberHandler {
+// MemberHandler는 Handler 규칙에 따라 메서드 구현
+public class MemberHandler implements Handler {
 
   private static final int MAX_SIZE = 100;
 
@@ -17,6 +18,7 @@ public class MemberHandler {
     this.title = title;
   }
 
+  // Handler 인터페이스에 선언된 대로 정의
   public void execute() {
     printMenu();
 
