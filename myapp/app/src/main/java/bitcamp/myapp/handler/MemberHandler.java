@@ -2,11 +2,12 @@ package bitcamp.myapp.handler;
 
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.LinkedList;
+import bitcamp.util.List;
 import bitcamp.util.Prompt;
 
 public class MemberHandler implements Handler {
 
-  private LinkedList list = new LinkedList();
+  private List list = new LinkedList();
   private Prompt prompt;
   private String title;
 
@@ -64,7 +65,7 @@ public class MemberHandler implements Handler {
     System.out.println("번호, 이름, 이메일, 성별");
     System.out.println("---------------------------------------");
 
-    Object[] arr = this.list.getList();
+    Object[] arr = this.list.toArray();
     for (Object obj : arr) {
       Member m = (Member) obj;
       System.out.printf("%d, %s, %s, %s\n", m.getNo(), m.getName(), m.getEmail(),
@@ -75,7 +76,7 @@ public class MemberHandler implements Handler {
   private void viewMember() {
     int memberNo = this.prompt.inputInt("번호? ");
 
-    Member m = (Member) this.list.retrieve(new Member(memberNo));
+    Member m = this.findBy(memberNo);
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
@@ -93,7 +94,7 @@ public class MemberHandler implements Handler {
   private void updateMember() {
     int memberNo = this.prompt.inputInt("번호? ");
 
-    Member m = (Member) this.list.retrieve(new Member(memberNo));
+    Member m = this.findBy(memberNo);
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
@@ -131,5 +132,16 @@ public class MemberHandler implements Handler {
     if (!this.list.remove(new Member(this.prompt.inputInt("번호? ")))) {
       System.out.println("해당 번호의 회원이 없습니다!");
     }
+  }
+
+  private Member findBy(int no) {
+    Object[] arr = this.list.toArray();
+    for (Object obj : arr) {
+      Member m = (Member) obj;
+      if (m.getNo() == no) {
+        return m;
+      }
+    }
+    return null;
   }
 }
