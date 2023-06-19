@@ -17,6 +17,39 @@ public class Board {
     this.createdDate = System.currentTimeMillis();
   }
 
+  public Board(int no) {
+    this.no = no;
+    this.createdDate = System.currentTimeMillis();
+  }
+
+
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+    if (this.getClass() != obj.getClass()) {
+      return false;
+    }
+
+    Board m = (Board) obj;
+    if (this.getNo() != m.getNo()) {
+      return false;
+    }
+    // if (this.getName() != null && !this.getName().equals(m.getName())) {
+    // return false;
+    // }
+    // if (this.getEmail() != null && !this.getEmail().equals(m.getEmail())) {
+    // return false;
+    // }
+    // if (this.getPassword() != null && !this.getPassword().equals(m.getPassword())) {
+    // return false;
+    // }
+    // if (this.getGender() != m.getGender()) {
+    // return false;
+    // }
+    return true;
+  }
+
   public String getPassword() {
     return password;
   }

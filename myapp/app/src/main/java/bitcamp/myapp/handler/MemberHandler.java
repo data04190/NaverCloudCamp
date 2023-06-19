@@ -3,10 +3,9 @@ package bitcamp.myapp.handler;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.Prompt;
 
-// MemberHandler는 Handler 규칙에 따라 메서드 구현
 public class MemberHandler implements Handler {
 
-  private MemberList list = new MemberList();
+  private ArrayList list = new ArrayList();
   private Prompt prompt;
   private String title;
 
@@ -15,7 +14,6 @@ public class MemberHandler implements Handler {
     this.title = title;
   }
 
-  // Handler 인터페이스에 선언된 대로 정의
   public void execute() {
     printMenu();
 
@@ -51,25 +49,25 @@ public class MemberHandler implements Handler {
   }
 
   private void inputMember() {
-
     Member m = new Member();
     m.setName(this.prompt.inputString("이름? "));
     m.setEmail(this.prompt.inputString("이메일? "));
     m.setPassword(this.prompt.inputString("암호? "));
     m.setGender(inputGender((char) 0));
 
-    this.list.add(m);
+    if (!this.list.add(m)) {
+      System.out.println("입력 실패입니다!");
+    }
   }
 
   private void printMembers() {
-
     System.out.println("---------------------------------------");
     System.out.println("번호, 이름, 이메일, 성별");
     System.out.println("---------------------------------------");
 
-    Member[] arr = this.list.list();
-
-    for (Member m : arr) {
+    Object[] arr = this.list.list();
+    for (Object obj : arr) {
+      Member m = (Member) obj;
       System.out.printf("%d, %s, %s, %s\n", m.getNo(), m.getName(), m.getEmail(),
           toGenderString(m.getGender()));
     }
@@ -78,8 +76,7 @@ public class MemberHandler implements Handler {
   private void viewMember() {
     int memberNo = this.prompt.inputInt("번호? ");
 
-    Member m = this.list.get(memberNo);
-
+    Member m = (Member) this.list.get(new Member(memberNo));
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
@@ -97,14 +94,14 @@ public class MemberHandler implements Handler {
   private void updateMember() {
     int memberNo = this.prompt.inputInt("번호? ");
 
-    Member m = this.list.get(memberNo);
+    Member m = (Member) this.list.get(new Member(memberNo));
     if (m == null) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
     }
 
-    m.setName(this.prompt.inputString("이름(" + m.getName() + ")? "));
-    m.setEmail(this.prompt.inputString("이메일(" + m.getEmail() + ")? "));
+    m.setName(this.prompt.inputString("이름(%s)? ", m.getName()));
+    m.setEmail(this.prompt.inputString("이메일(%s)? ", m.getEmail()));
     m.setPassword(this.prompt.inputString("새암호? "));
     m.setGender(inputGender(m.getGender()));
   }
@@ -116,8 +113,9 @@ public class MemberHandler implements Handler {
     } else {
       label = String.format("성별(%s)?\n", toGenderString(gender));
     }
+
     while (true) {
-      String menuNo = this.prompt.inputString(label + " 1. 남자\n" + " 2. 여자\n" + "> ");
+      String menuNo = this.prompt.inputString(label + "  1. 남자\n" + "  2. 여자\n" + "> ");
 
       switch (menuNo) {
         case "1":
@@ -131,9 +129,7 @@ public class MemberHandler implements Handler {
   }
 
   private void deleteMember() {
-    int memberNo = this.prompt.inputInt("번호? ");
-
-    if (!this.list.delete(memberNo)) {
+    if (!this.list.delete(new Member(this.prompt.inputInt("번호? ")))) {
       System.out.println("해당 번호의 회원이 없습니다!");
     }
   }
