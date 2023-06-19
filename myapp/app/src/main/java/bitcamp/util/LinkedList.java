@@ -123,4 +123,12 @@ public class LinkedList {
 
     return false;
   }
+
+  static class Node {
+    Object value;
+    Node next;
+  }
+
+
+
 }
