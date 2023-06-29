@@ -23,4 +23,3 @@ public abstract class AbstractBoardListener implements ActionListener {
   }
 
 }
-

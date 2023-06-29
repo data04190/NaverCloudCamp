@@ -1,20 +1,35 @@
 package bitcamp.io;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
-public class DataOutputStream extends FileOutputStream {
+public class DataOutputStream extends OutputStream {
 
-  public DataOutputStream(String name) throws FileNotFoundException {
-    super(name);
+  OutputStream original;
+
+  public DataOutputStream(OutputStream original) {
+    this.original = original;
+  }
+
+  public void write(int b) throws IOException {
+    original.write(b);
+  }
+
+  @Override
+  public void flush() throws IOException {
+    original.flush();
+  }
+
+  @Override
+  public void close() throws IOException {
+    this.flush();
+    original.close();
   }
 
   public void writeShort(int v) throws IOException {
     this.write(v >> 8);
     this.write(v);
   }
-
 
   public void writeInt(int v) throws IOException {
     this.write(v >> 24);
@@ -41,13 +56,8 @@ public class DataOutputStream extends FileOutputStream {
 
   public void writeUTF(String str) throws IOException {
     byte[] bytes = str.getBytes("UTF-8");
-    // 출력할 바이트 개수를 2바이트로 표시한다.
     this.write(bytes.length >> 8);
     this.write(bytes.length);
     this.write(bytes);
-
   }
-
-
-
 }

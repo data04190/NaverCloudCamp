@@ -1,8 +1,12 @@
 package bitcamp.myapp;
 
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import bitcamp.io.BufferedOutputStream;
 import bitcamp.io.DataInputStream;
 import bitcamp.io.DataOutputStream;
 import bitcamp.myapp.handler.BoardAddListener;
@@ -10,6 +14,9 @@ import bitcamp.myapp.handler.BoardDeleteListener;
 import bitcamp.myapp.handler.BoardDetailListener;
 import bitcamp.myapp.handler.BoardListListener;
 import bitcamp.myapp.handler.BoardUpdateListener;
+import bitcamp.myapp.handler.FooterListener;
+import bitcamp.myapp.handler.HeaderListener;
+import bitcamp.myapp.handler.HelloListener;
 import bitcamp.myapp.handler.MemberAddListener;
 import bitcamp.myapp.handler.MemberDeleteListener;
 import bitcamp.myapp.handler.MemberDetailListener;
@@ -26,13 +33,13 @@ public class App {
   ArrayList<Member> memberList = new ArrayList<>();
   LinkedList<Board> boardList = new LinkedList<>();
   LinkedList<Board> readingList = new LinkedList<>();
+
   BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 
   MenuGroup mainMenu = new MenuGroup("메인");
 
   public App() {
     prepareMenu();
-
   }
 
   public static void main(String[] args) {
@@ -50,22 +57,20 @@ public class App {
     loadData();
     mainMenu.execute(prompt);
     saveData();
-    prompt.close();
 
+    prompt.close();
   }
 
   private void loadData() {
     loadMember();
     loadBoard("board.data", boardList);
     loadBoard("reading.data", readingList);
-
   }
 
   private void saveData() {
     saveMember();
     saveBoard("board.data", boardList);
     saveBoard("reading.data", readingList);
-
   }
 
   private void prepareMenu() {
@@ -92,11 +97,18 @@ public class App {
     readingMenu.add(new Menu("변경", new BoardUpdateListener(readingList)));
     readingMenu.add(new Menu("삭제", new BoardDeleteListener(readingList)));
     mainMenu.add(readingMenu);
+
+    Menu helloMenu = new Menu("안녕!");
+    helloMenu.addActionListener(new HeaderListener());
+    helloMenu.addActionListener(new HelloListener());
+    helloMenu.addActionListener(new FooterListener());
+    mainMenu.add(helloMenu);
   }
 
   private void loadMember() {
     try {
-      DataInputStream in = new DataInputStream("member.data");
+      FileInputStream in0 = new FileInputStream("member.data");
+      DataInputStream in = new DataInputStream(in0); // <==Decorator 역할 수행!
 
       int size = in.readShort();
 
@@ -110,9 +122,8 @@ public class App {
         memberList.add(member);
       }
 
-      // 데이터를 로딩한 이후로 추가할 회원의 번호를 설정한다.
+      // 데이터를 로딩한 이후에 추가할 회원의 번호를 설정한다.
       Member.userId = memberList.get(memberList.size() - 1).getNo() + 1;
-
 
       in.close();
 
@@ -121,29 +132,11 @@ public class App {
     }
   }
 
-  private void saveMember() {
-    try {
-      DataOutputStream out = new DataOutputStream("member.data");
-
-      // 저장할 데이터의 개수를 먼저 출력한다.
-      out.writeShort(memberList.size());
-
-      for (Member member : memberList) {
-        out.writeInt(member.getNo());
-        out.writeUTF(member.getName());
-        out.writeUTF(member.getEmail());
-        out.writeUTF(member.getPassword());
-        out.writeChar(member.getGender());
-      }
-      out.close();
-    } catch (Exception e) {
-      System.out.println("회원 정보를 저장하는 중 오류 발생!");
-    }
-  }
-
   private void loadBoard(String filename, List<Board> list) {
     try {
-      DataInputStream in = new DataInputStream(filename);
+      FileInputStream in0 = new FileInputStream(filename);
+      DataInputStream in = new DataInputStream(in0); // <== Decorator 역할을 수행!
+
       int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
@@ -156,20 +149,44 @@ public class App {
         board.setViewCount(in.readInt());
         board.setCreatedDate(in.readLong());
         list.add(board);
-
       }
-      Board.boardNo = Math.max(Board.boardNo, list.get(boardList.size() - 1).getNo() + 1);
+
+      Board.boardNo = Math.max(Board.boardNo, list.get(list.size() - 1).getNo() + 1);
 
       in.close();
 
     } catch (Exception e) {
-      System.out.println(filename + "파일을 읽는 중 오류 발생!");
+      System.out.println(filename + " 파일을 읽는 중 오류 발생!");
+    }
+  }
+
+  private void saveMember() {
+    try {
+      FileOutputStream out0 = new FileOutputStream("member.data");
+      BufferedOutputStream out1 = new BufferedOutputStream(out0);
+      DataOutputStream out = new DataOutputStream(out1); // <==Decorator(장식품) 역할 수행!
+
+      out.writeShort(memberList.size());
+
+      for (Member member : memberList) {
+        out.writeInt(member.getNo());
+        out.writeUTF(member.getName());
+        out.writeUTF(member.getEmail());
+        out.writeUTF(member.getPassword());
+        out.writeChar(member.getGender());
+      }
+      out.close();
+
+    } catch (Exception e) {
+      System.out.println("회원 정보를 저장하는 중 오류 발생!");
     }
   }
 
   private void saveBoard(String filename, List<Board> list) {
     try {
-      DataOutputStream out = new DataOutputStream(filename);
+      FileOutputStream out0 = new FileOutputStream(filename);
+      BufferedOutputStream out1 = new BufferedOutputStream(out0); // <==Decorator(장식품) 역할 수행!
+      DataOutputStream out = new DataOutputStream(out1); // <==Decorator(장식품) 역할 수행!
 
       out.writeShort(list.size());
 
@@ -181,14 +198,11 @@ public class App {
         out.writeUTF(board.getPassword());
         out.writeInt(board.getViewCount());
         out.writeLong(board.getCreatedDate());
-
-
       }
       out.close();
 
     } catch (Exception e) {
-      System.out.println(filename + "파일을 저장하는 중 오류 발생!");
+      System.out.println(filename + " 파일을 저장하는 중 오류 발생!");
     }
   }
-
 }
