@@ -1,14 +1,18 @@
 package bitcamp.myapp;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import bitcamp.myapp.dao.MemberDao;
+import bitcamp.myapp.dao.MemberListDao;
 import bitcamp.myapp.handler.BoardAddListener;
 import bitcamp.myapp.handler.BoardDeleteListener;
 import bitcamp.myapp.handler.BoardDetailListener;
@@ -22,6 +26,7 @@ import bitcamp.myapp.handler.MemberDeleteListener;
 import bitcamp.myapp.handler.MemberDetailListener;
 import bitcamp.myapp.handler.MemberListListener;
 import bitcamp.myapp.handler.MemberUpdateListener;
+import bitcamp.myapp.vo.AutoIncrement;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
@@ -30,6 +35,7 @@ import bitcamp.util.MenuGroup;
 
 public class App {
 
+  MemberDao memberDao = new MemberListDao("member.json");
   ArrayList<Member> memberList = new ArrayList<>();
   LinkedList<Board> boardList = new LinkedList<>();
   LinkedList<Board> readingList = new LinkedList<>();
@@ -62,21 +68,21 @@ public class App {
   }
 
   private void loadData() {
-    loadMember();
-    loadBoard("board.data", boardList);
-    loadBoard("reading.data", readingList);
+    loadJson("member.json", memberList, Member.class);
+    loadJson("board.json", boardList, Board.class);
+    loadJson("reading.json", readingList, Board.class);
   }
 
   private void saveData() {
-    saveMember();
-    saveBoard("board.data", boardList);
-    saveBoard("reading.data", readingList);
+    saveJson("member.json", memberList);
+    saveJson("board.json", boardList);
+    saveJson("reading.json", readingList);
   }
 
   private void prepareMenu() {
     MenuGroup memberMenu = new MenuGroup("회원");
-    memberMenu.add(new Menu("등록", new MemberAddListener(memberList)));
-    memberMenu.add(new Menu("목록", new MemberListListener(memberList)));
+    memberMenu.add(new Menu("등록", new MemberAddListener(memberDao)));
+    memberMenu.add(new Menu("목록", new MemberListListener(memberDao)));
     memberMenu.add(new Menu("조회", new MemberDetailListener(memberList)));
     memberMenu.add(new Menu("변경", new MemberUpdateListener(memberList)));
     memberMenu.add(new Menu("삭제", new MemberDeleteListener(memberList)));
@@ -105,106 +111,60 @@ public class App {
     mainMenu.add(helloMenu);
   }
 
-  private void loadMember() {
+
+  private <T> void loadJson(String filename, List<T> list, Class<T> clazz) {
     try {
-      FileInputStream in0 = new FileInputStream("member.data");
-      BufferedInputStream in1 = new BufferedInputStream(in0);
-      DataInputStream in = new DataInputStream(in1); // <==Decorator 역할 수행!
 
-      int size = in.readShort();
+      FileReader in0 = new FileReader(filename);
+      BufferedReader in = new BufferedReader(in0); // <== Decorator 역할을 수행!
 
-      for (int i = 0; i < size; i++) {
-        Member member = new Member();
-        member.setNo(in.readInt());
-        member.setName(in.readUTF());
-        member.setEmail(in.readUTF());
-        member.setPassword(in.readUTF());
-        member.setGender(in.readChar());
-        memberList.add(member);
+      StringBuilder strBuilder = new StringBuilder();
+      String line = null;
+
+
+      while ((line = in.readLine()) != null) {
+        strBuilder.append(line);
       }
-
-      // 데이터를 로딩한 이후에 추가할 회원의 번호를 설정한다.
-      Member.userId = memberList.get(memberList.size() - 1).getNo() + 1;
 
       in.close();
 
+      Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+
+
+      Collection<T> objects = gson.fromJson(strBuilder.toString(),
+          TypeToken.getParameterized(Collection.class, clazz).getType());
+
+      list.addAll(objects);
+
+      Class<?>[] interfaces = clazz.getInterfaces();
+      for (Class<?> info : interfaces) {
+        System.out.println(info.getName());
+        if (info == AutoIncrement.class) {
+          AutoIncrement autoIncrement = (AutoIncrement) list.get(list.size() - 1);
+          autoIncrement.updateKey();
+          break;
+        }
+      }
+
+
     } catch (Exception e) {
-      System.out.println("회원 정보를 읽는 중 오류 발생!");
+      System.out.println(filename + "파일을 읽는 중 오류 발생!");
     }
   }
 
-  private void loadBoard(String filename, List<Board> list) {
+  private void saveJson(String filename, List<?> list) {
     try {
-      FileInputStream in0 = new FileInputStream(filename);
-      BufferedInputStream in1 = new BufferedInputStream(in0);
-      DataInputStream in = new DataInputStream(in1); // <== Decorator 역할을 수행!
+      FileWriter out0 = new FileWriter(filename);
+      BufferedWriter out = new BufferedWriter(out0); // <== Decorator(장식품) 역할 수행!
 
-      int size = in.readShort();
+      Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").setPrettyPrinting().create();
+      out.write(gson.toJson(list));
 
-      for (int i = 0; i < size; i++) {
-        Board board = new Board();
-        board.setNo(in.readInt());
-        board.setTitle(in.readUTF());
-        board.setContent(in.readUTF());
-        board.setWriter(in.readUTF());
-        board.setPassword(in.readUTF());
-        board.setViewCount(in.readInt());
-        board.setCreatedDate(in.readLong());
-        list.add(board);
-      }
-
-      Board.boardNo = Math.max(Board.boardNo, list.get(list.size() - 1).getNo() + 1);
-
-      in.close();
-
-    } catch (Exception e) {
-      System.out.println(filename + " 파일을 읽는 중 오류 발생!");
-    }
-  }
-
-  private void saveMember() {
-    try {
-      FileOutputStream out0 = new FileOutputStream("member.data");
-      BufferedOutputStream out1 = new BufferedOutputStream(out0);
-      DataOutputStream out = new DataOutputStream(out1); // <==Decorator(장식품) 역할 수행!
-
-      out.writeShort(memberList.size());
-
-      for (Member member : memberList) {
-        out.writeInt(member.getNo());
-        out.writeUTF(member.getName());
-        out.writeUTF(member.getEmail());
-        out.writeUTF(member.getPassword());
-        out.writeChar(member.getGender());
-      }
-      out.close();
-
-    } catch (Exception e) {
-      System.out.println("회원 정보를 저장하는 중 오류 발생!");
-    }
-  }
-
-  private void saveBoard(String filename, List<Board> list) {
-    try {
-      FileOutputStream out0 = new FileOutputStream(filename);
-      BufferedOutputStream out1 = new BufferedOutputStream(out0); // <==Decorator(장식품) 역할 수행!
-      DataOutputStream out = new DataOutputStream(out1); // <==Decorator(장식품) 역할 수행!
-
-      out.writeShort(list.size());
-
-      for (Board board : list) {
-        out.writeInt(board.getNo());
-        out.writeUTF(board.getTitle());
-        out.writeUTF(board.getContent());
-        out.writeUTF(board.getWriter());
-        out.writeUTF(board.getPassword());
-        out.writeInt(board.getViewCount());
-        out.writeLong(board.getCreatedDate());
-      }
       out.close();
 
     } catch (Exception e) {
       System.out.println(filename + " 파일을 저장하는 중 오류 발생!");
     }
   }
+
 }
