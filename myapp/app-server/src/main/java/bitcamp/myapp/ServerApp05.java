@@ -17,14 +17,14 @@ import bitcamp.net.ResponseEntity;
 // 3) 메서드의 파라미터와 리턴 타입을 알아내기
 // 4) 메서드 호출 및 리턴 값 받기
 // 5) 리팩토링
-public class ServerApp {
+public class ServerApp05 {
 
   int port;
   ServerSocket serverSocket;
 
-  HashMap<String, Object> daoMap = new HashMap<>();
+  HashMap<String,Object> daoMap = new HashMap<>();
 
-  public ServerApp(int port) throws Exception {
+  public ServerApp05(int port) throws Exception {
     this.port = port;
 
     daoMap.put("member", new MemberListDao("member.json"));
@@ -42,7 +42,7 @@ public class ServerApp {
       return;
     }
 
-    ServerApp app = new ServerApp(Integer.parseInt(args[0]));
+    ServerApp05 app = new ServerApp05(Integer.parseInt(args[0]));
     app.execute();
     app.close();
   }
@@ -73,32 +73,30 @@ public class ServerApp {
 
       Object dao = daoMap.get(dataName);
       if (dao == null) {
-        out.writeUTF(
-            new ResponseEntity().status(ResponseEntity.ERROR).result("데이터를 찾을 수 없습니다.").toJson());
+        out.writeUTF(new ResponseEntity()
+            .status(ResponseEntity.ERROR)
+            .result("데이터를 찾을 수 없습니다.")
+            .toJson());
         continue;
       }
 
       // DAO 객체에서 메서드 찾기
       Method method = findMethod(dao, methodName);
       if (method == null) {
-        out.writeUTF(
-            new ResponseEntity().status(ResponseEntity.ERROR).result("메서드를 찾을 수 없습니다.").toJson());
+        out.writeUTF(new ResponseEntity()
+            .status(ResponseEntity.ERROR)
+            .result("메서드를 찾을 수 없습니다.")
+            .toJson());
         continue;
       }
 
-      try {
-        Object result = call(dao, method, request);
+      // DAO 메서드 호출하기
+      Object result = call(dao, method, request);
 
-        ResponseEntity response = new ResponseEntity();
-        response.status(ResponseEntity.SUCCESS);
-        response.result(result);
-        out.writeUTF(response.toJson());
-      } catch (Exception e) {
-        ResponseEntity response = new ResponseEntity();
-        response.status(ResponseEntity.ERROR);
-        response.result(e.getMessage());
-        out.writeUTF(response.toJson());
-      }
+      ResponseEntity response = new ResponseEntity();
+      response.status(ResponseEntity.SUCCESS);
+      response.result(result);
+      out.writeUTF(response.toJson());
     }
 
     in.close();
@@ -127,5 +125,8 @@ public class ServerApp {
     }
   }
 }
+
+
+
 
 

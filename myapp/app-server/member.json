@@ -82,5 +82,12 @@
     "email": "kk@test.com",
     "password": "1111",
     "gender": "W"
+  },
+  {
+    "no": 14,
+    "name": "test1",
+    "email": "test1@test.com",
+    "password": "1111",
+    "gender": "W"
   }
 ]
