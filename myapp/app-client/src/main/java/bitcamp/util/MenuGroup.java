@@ -43,7 +43,6 @@ public class MenuGroup extends Menu {
       } catch (Exception e) {
         System.out.printf("실행 오류: %s\n", e.getMessage());
       }
-
     }
   }
 
