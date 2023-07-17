@@ -8,22 +8,22 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import bitcamp.myapp.dao.BoardListDao;
 import bitcamp.myapp.dao.MemberListDao;
 import bitcamp.net.RequestEntity;
 import bitcamp.net.ResponseEntity;
-import bitcamp.util.ManagedThread;
-import bitcamp.util.ThreadPool;
 
 public class ServerApp {
 
   int port;
   ServerSocket serverSocket;
 
-  HashMap<String,Object> daoMap = new HashMap<>();
+  HashMap<String, Object> daoMap = new HashMap<>();
 
-  // 스레드를 리턴해 줄 스레드풀 준비
-  ThreadPool threadPool = new ThreadPool();
+  // 자바 스레드풀 준비
+  ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
   public ServerApp(int port) throws Exception {
     this.port = port;
@@ -56,8 +56,7 @@ public class ServerApp {
 
     while (true) {
       Socket socket = serverSocket.accept();
-      ManagedThread t = threadPool.getResource();
-      t.setJob(() ->processRequest(socket));
+      threadPool.execute(() -> processRequest(socket));
     }
   }
 
@@ -86,13 +85,12 @@ public class ServerApp {
         DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
 
       InetSocketAddress socketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
-      System.out.printf("%s:%s 클라이언트가 접속했음!\n",
-          socketAddress.getHostString(),
-          socketAddress.getPort());
+      System.out.printf("[%s] %s:%s 클라이언트가 접속했음!\n", Thread.currentThread().getName(),
+          socketAddress.getHostString(), socketAddress.getPort());
 
       // 스레드풀이 새 스레드를 만드는 것을 테스트하기 위함.
       // => 스레드풀에 스레드가 없을 때 새 스레드를 만들 것이다.
-      Thread.sleep(10000);
+      // Thread.sleep(10000);
 
       // 클라이언트 요청을 반복해서 처리하지 않는다.
       // => 접속 -> 요청 -> 실행 -> 응답 -> 연결 끊기
@@ -107,19 +105,15 @@ public class ServerApp {
 
       Object dao = daoMap.get(dataName);
       if (dao == null) {
-        out.writeUTF(new ResponseEntity()
-            .status(ResponseEntity.ERROR)
-            .result("데이터를 찾을 수 없습니다.")
-            .toJson());
+        out.writeUTF(
+            new ResponseEntity().status(ResponseEntity.ERROR).result("데이터를 찾을 수 없습니다.").toJson());
         return;
       }
 
       Method method = findMethod(dao, methodName);
       if (method == null) {
-        out.writeUTF(new ResponseEntity()
-            .status(ResponseEntity.ERROR)
-            .result("메서드를 찾을 수 없습니다.")
-            .toJson());
+        out.writeUTF(
+            new ResponseEntity().status(ResponseEntity.ERROR).result("메서드를 찾을 수 없습니다.").toJson());
         return;
       }
 
@@ -142,8 +136,5 @@ public class ServerApp {
     }
   }
 }
-
-
-
 
 
