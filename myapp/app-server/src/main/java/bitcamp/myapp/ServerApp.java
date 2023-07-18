@@ -56,6 +56,7 @@ public class ServerApp {
 
     while (true) {
       Socket socket = serverSocket.accept();
+
       threadPool.execute(() -> processRequest(socket));
     }
   }
