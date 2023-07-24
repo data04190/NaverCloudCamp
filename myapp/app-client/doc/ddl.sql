@@ -25,3 +25,10 @@ alter table myapp_member
   add constraint primary key (member_no),
   modify column member_no int not null auto_increment;
   
+alter table myapp_board
+  add column category int not null;
+    
+
+  
+  
+  

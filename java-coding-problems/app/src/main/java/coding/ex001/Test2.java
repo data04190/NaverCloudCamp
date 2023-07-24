@@ -33,7 +33,8 @@ public class Test2 {
         }
 
       }
-      result.compute(ch, (k, v) -> (v == null) ? 1 : ++v);
+      result.compute(ch, new MyValue());
+      // result.compute(ch, (k, v) -> (v == null) ? 1 : ++v);
     }
 
     for (Entry<Character, Integer> entry : result.entrySet()) {
