@@ -14,7 +14,6 @@ public class CalcClient3 {
   static Pattern pattern = Pattern.compile("[0-9]+|\\p{Punct}");
 
   public static void main(String[] args) {
-
     String uuid = "";
 
     try (Scanner keyscan = new Scanner(System.in)) {
@@ -33,7 +32,8 @@ public class CalcClient3 {
           continue;
         }
 
-        try (Socket socket = new Socket("localhost", 8888);
+        try (
+            Socket socket = new Socket("localhost", 8888);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream())) {
 
@@ -82,5 +82,10 @@ public class CalcClient3 {
     int value;
   }
 }
+
+
+
+
+
 
 
