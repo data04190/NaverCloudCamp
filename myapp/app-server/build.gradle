@@ -14,9 +14,15 @@ dependencies {
   
   // MySQL JDBC 드라이버
   implementation 'mysql:mysql-connector-java:8.0.33'
+
+  //Netty 
+  implementation 'io.netty:netty-all:4.1.96.Final'
   
   // Google JSON 라이브러리
   implementation 'com.google.code.gson:gson:2.10.1'
+  
+  //Mybatis 라이브러리
+  implementation 'org.mybatis:mybatis:3.5.13'
   
   // jackson-databind JSON 라이브러리
   implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
