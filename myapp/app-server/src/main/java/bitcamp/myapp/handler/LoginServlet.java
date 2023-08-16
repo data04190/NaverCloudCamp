@@ -15,7 +15,7 @@ public class LoginServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response)
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
     Member m = new Member();
@@ -44,7 +44,6 @@ public class LoginServlet extends HttpServlet {
     out.println("<p>회원 정보가 일치하지 않습니다.</p>");
     out.println("</body>");
     out.println("</html>");
+
   }
-
-
 }
