@@ -35,6 +35,9 @@ dependencies {
 
   // This dependency is used by the application.
   implementation 'com.google.guava:guava:31.1-jre'
+  
+  // 임베디드 Tomcat 서버
+  implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.79'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
