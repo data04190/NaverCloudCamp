@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'eclipse-wtp'
+    //id 'eclipse-wtp'
     id 'war'
 }
 
@@ -26,7 +26,7 @@ dependencies {
   implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
   
   // Servlet API
-  providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+  //providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
   
   // multiplart/form-data 처리 라이브러리
   //implementation 'commons-fileupload:commons-fileupload:1.5' // Servlet API 로 대체 
@@ -38,6 +38,9 @@ dependencies {
   
   // 임베디드 Tomcat 서버
   implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.79'
+  
+  // Amazon AWS Java SDK s3
+  implementation 'com.amazonaws:aws-java-sdk-s3:1.12.530'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -59,6 +62,7 @@ tasks.withType(JavaCompile) {
 }
 
 // eclipse 프로젝트 이름을 설정하기
+/*
 eclipse {
     project {
         name = "myapp-server"
@@ -79,6 +83,8 @@ eclipse {
         }
     }
 }
+
+*/
 
 war {
     archiveBaseName = "myapp"
