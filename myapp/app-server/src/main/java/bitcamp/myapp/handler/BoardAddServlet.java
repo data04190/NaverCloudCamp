@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
@@ -26,7 +27,7 @@ public class BoardAddServlet extends HttpServlet {
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
-      response.sendRedirect("/auth/form.html");
+      response.sendRedirect("/auth/form");
       return;
     }
 
@@ -39,7 +40,6 @@ public class BoardAddServlet extends HttpServlet {
 
       ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
       for (Part part : request.getParts()) {
-        //        System.out.println(part.getName());
         if (part.getName().equals("files") && part.getSize() > 0) {
           String uploadFileUrl = InitServlet.ncpObjectStorageService.uploadFile(
                   "bitcamp-nc7-bucket-26", "board/", part);
@@ -52,11 +52,11 @@ public class BoardAddServlet extends HttpServlet {
 
       InitServlet.boardDao.insert(board);
       if (attachedFiles.size() > 0) {
-          InitServlet.boardDao.insertFiles(board);
+        InitServlet.boardDao.insertFiles(board);
       }
 
       InitServlet.sqlSessionFactory.openSession(false).commit();
-      response.sendRedirect("list?category="+board.getCategory());
+      response.sendRedirect("list?category=" + request.getParameter("category"));
 
     } catch (Exception e) {
       InitServlet.sqlSessionFactory.openSession(false).rollback();
@@ -65,9 +65,20 @@ public class BoardAddServlet extends HttpServlet {
       // ServletRequest 보관소에 저장한다.
       request.setAttribute("error", e);
       request.setAttribute("message", "게시글 등록 오류!");
-      request.setAttribute("refresh", "2;list?category=" + request.getParameter("category"));
+      request.setAttribute("refresh", "2;url=list?category=" + request.getParameter("category"));
 
       request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+

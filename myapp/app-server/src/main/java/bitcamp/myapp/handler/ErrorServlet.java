@@ -38,16 +38,28 @@ public class ErrorServlet extends HttpServlet {
     out.println("</head>");
     out.println("<body>");
 
-    request.getRequestDispatcher("/header").include(request,response);
+    request.getRequestDispatcher("/header").include(request, response);
 
     out.println("<h1>실행 오류!</h1>");
 
     if (request.getAttribute("message") != null) {
-    out.printf("<p>%s</p>\n", request.getAttribute("message"));
+      out.printf("<p>%s</p>\n", request.getAttribute("message"));
     }
 
-    request.getRequestDispatcher("/footer").include(request,response);
+    request.getRequestDispatcher("/footer").include(request, response);
+
     out.println("</body>");
     out.println("</html>");
   }
 }
+
+
+
+
+
+
+
+
+
+
+

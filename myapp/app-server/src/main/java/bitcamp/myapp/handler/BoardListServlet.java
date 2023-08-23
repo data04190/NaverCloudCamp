@@ -69,7 +69,9 @@ public class BoardListServlet extends HttpServlet {
     out.println("</table>");
     out.println("<a href='/'>메인</a>");
 
-    request.getRequestDispatcher("/footer").include(request,response);
+    // FooterServlet의 출력 결과를 합친다.
+    request.getRequestDispatcher("/footer").include(request, response);
+
     out.println("</body>");
     out.println("</html>");
   }
