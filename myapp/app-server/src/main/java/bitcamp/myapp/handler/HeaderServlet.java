@@ -24,8 +24,8 @@ public class HeaderServlet extends HttpServlet {
     out.println("<div style='height:50px;background-color:orange;'>");
     out.println("<img src='https://www.ncloud.com/public/img/logo-m.png' style='height:40px'>");
     out.println("<a href='/member/list'>회원</a>");
-    out.println("<a href='/board/list?category=1'>게시글</a>");
-    out.println("<a href='/board/list?category=2'>독서록</a>");
+    out.println("<a href='/board/list.jsp?category=1'>게시글</a>");
+    out.println("<a href='/board/list.jsp?category=2'>독서록</a>");
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -34,7 +34,7 @@ public class HeaderServlet extends HttpServlet {
       out.printf("%s %s <a href='/auth/logout'>로그아웃</a>\n",
               (loginUser.getPhoto() == null ?
                       "<img style='height:40px' src='/images/avatar.png'>" :
-                      String.format("<img src='http://mvsenqskbqzl19010704.cdn.ntruss.com/member/%1$s?type=f&w=60&h=80&faceopt=true&ttype=jpg'>",
+                      String.format("<img src='http://kgddbipzoniy19010732.cdn.ntruss.com/member/%1$s?type=f&w=60&h=80&faceopt=true&ttype=jpg'>",
                               loginUser.getPhoto())),
               loginUser.getName());
     }

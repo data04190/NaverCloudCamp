@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7e6e53c2-dbf1-4bd8-b217-2490bb0b1e3e" name="Changes" comment="" />
+    <list default="true" id="7e6e53c2-dbf1-4bd8-b217-2490bb0b1e3e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/listener/ContextLoaderListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/board/list.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/footer.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/header.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardAddServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardAddServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardDeleteServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardDeleteServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardDetailServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardDetailServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardFileDeleteServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardFileDeleteServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardFormServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardListServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardUpdateServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/BoardUpdateServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/HeaderServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/HeaderServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/HomeServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/InitServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/LoginFormServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/LoginFormServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/LoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/LoginServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberAddServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberAddServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberDeleteServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberDeleteServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberDetailServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberDetailServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberListServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberListServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberUpdateServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/handler/MemberUpdateServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/listener/MyServletRequestListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bitcamp/myapp/listener/MyServletRequestListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/board/form.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/board/form.jsp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,22 +36,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2UKM0y12z5KzPzwh6nCKun76WwE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/82105/git/bitcamp-study/myapp/settings.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/82105/git/bitcamp-study/myapp/settings.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

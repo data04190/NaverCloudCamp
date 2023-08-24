@@ -16,8 +16,7 @@ public class LoginFormServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-
+          throws ServletException, IOException {
 
     String email = "";
     Cookie[] cookies = request.getCookies();
@@ -29,8 +28,6 @@ public class LoginFormServlet extends HttpServlet {
         }
       }
     }
-
-
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -56,7 +53,7 @@ public class LoginFormServlet extends HttpServlet {
     out.println("</tr>");
     out.println("</table>");
     out.println("<button>로그인</button>");
-    out.println(" <input type='checkbox' name = 'saveEmail'> 이메일 저장");
+    out.println(" <input type='checkbox' name='saveEmail'> 이메일 저장");
     out.println("</form>");
 
     request.getRequestDispatcher("/footer").include(request, response);
@@ -66,14 +63,3 @@ public class LoginFormServlet extends HttpServlet {
 
   }
 }
-
-
-
-
-
-
-
-
-
-
-
