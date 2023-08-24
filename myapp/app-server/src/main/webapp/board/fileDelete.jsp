@@ -1,26 +1,20 @@
-package bitcamp.myapp.handler;
+<%@ page
+    language="java"
+    pageEncoding="UTF-8"
+    contentType="text/html;charset=UTF-8"
+    trimDirectiveWhitespaces="true"
+    errorPage="/error.jsp"%>
 
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+<%@ page import="bitcamp.myapp.dao.BoardDao"%>
+<%@ page import="bitcamp.myapp.vo.AttachedFile"%>
+<%@ page import="bitcamp.myapp.vo.Board"%>
+<%@ page import="bitcamp.myapp.vo.Member"%>
+<%@ page import="org.apache.ibatis.session.SqlSessionFactory"%>
 
-import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.vo.AttachedFile;
-import bitcamp.myapp.vo.Board;
-import bitcamp.myapp.vo.Member;
-import org.apache.ibatis.session.SqlSessionFactory;
-
-@WebServlet("/board/file/delete")
-public class BoardFileDeleteServlet extends HttpServlet {
-
-  private static final long serialVersionUID = 1L;
-
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+<%
+    request.setAttribute("refresh", "2;url=detail.jsp?category="
+     + request.getParameter("category")
+     + "&no=" + request.getParameter("no"));
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -47,12 +41,11 @@ public class BoardFileDeleteServlet extends HttpServlet {
       throw new ServletException("게시글 변경 권한이 없습니다!");
     }
 
-    // 일치하면 첨부파일을 삭제한다.
     try {
       if (boardDao.deleteFile(fileNo) == 0) {
         throw new Exception("해당 번호의 첨부파일이 없거나 삭제 권한이 없습니다.");
       } else {
-        response.sendRedirect("/board/detail?category=" + category + "&no=" + board.getNo());
+        response.sendRedirect("detail.jsp?category=" + category + "&no=" + board.getNo());
       }
       sqlSessionFactory.openSession(false).commit();
 
@@ -60,16 +53,5 @@ public class BoardFileDeleteServlet extends HttpServlet {
       sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
     }
-  }
-}
-
-
-
-
-
-
-
-
-
-
+%>
 
