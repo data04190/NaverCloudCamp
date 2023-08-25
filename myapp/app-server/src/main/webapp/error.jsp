@@ -3,8 +3,9 @@
     pageEncoding="UTF-8"
     contentType="text/html;charset=UTF-8"
     isErrorPage="true"%>
-
+<jsp:useBean id="sqlSessionFactory" type="org.apache.ibatis.session.SqlSessionFactory" scope="application"/>
 <%
+    sqlSessionFactory.openSession(false).rollback();
     if (request.getAttribute("refresh") != null) {
       response.setHeader("Refresh", (String) request.getAttribute("refresh"));
     }
@@ -18,7 +19,7 @@
 </head>
 <body>
 
-<jsp:include page="/header.jsp"/>
+<jsp:include page="header.jsp"/>
 
 <h1>실행 오류!</h1>
 
@@ -28,3 +29,14 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

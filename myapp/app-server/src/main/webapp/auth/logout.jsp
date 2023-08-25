@@ -6,6 +6,6 @@
     errorPage="/error.jsp"%>
 
 <%
-    session().invalidate();
+    session.invalidate();
     response.sendRedirect("/");
 %>
