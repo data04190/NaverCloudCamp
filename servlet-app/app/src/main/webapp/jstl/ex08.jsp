@@ -34,7 +34,6 @@ for (String n : values) {
 </c:forTokens>
 </ul>
 
-
 <h2>Query String 문자열</h2>
 <%
 pageContext.setAttribute("qs", "name=홍길동&age=20&tel=1111-2222");
