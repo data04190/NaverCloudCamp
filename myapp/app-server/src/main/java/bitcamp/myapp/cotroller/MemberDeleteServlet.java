@@ -1,4 +1,4 @@
-package bitcamp.myapp.handler;
+package bitcamp.myapp.cotroller;
 
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.util.NcpObjectStorageService;
