@@ -1,4 +1,4 @@
-package bitcamp.myapp.cotroller;
+package bitcamp.myapp.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

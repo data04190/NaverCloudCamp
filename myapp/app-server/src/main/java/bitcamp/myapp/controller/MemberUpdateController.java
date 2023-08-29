@@ -1,4 +1,4 @@
-package bitcamp.myapp.cotroller;
+package bitcamp.myapp.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -14,17 +14,11 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.util.NcpObjectStorageService;
 import org.apache.ibatis.session.SqlSessionFactory;
 
-@WebServlet("/member/add")
+@WebServlet("/member/update")
 @MultipartConfig(maxFileSize = 1024 * 1024 * 10)
-public class MemberAddController extends HttpServlet {
+public class MemberUpdateController extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
-
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    response.setContentType("text/html;charset=UTF-8");
-    request.getRequestDispatcher("/member/form.jsp").include(request, response);
-  }
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,31 +28,32 @@ public class MemberAddController extends HttpServlet {
     SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) this.getServletContext().getAttribute("sqlSessionFactory");
     NcpObjectStorageService ncpObjectStorageService = (NcpObjectStorageService) this.getServletContext().getAttribute("ncpObjectStorageService");
 
-    Member m = new Member();
-    m.setName(request.getParameter("name"));
-    m.setEmail(request.getParameter("email"));
-    m.setPassword(request.getParameter("password"));
-    m.setGender(request.getParameter("gender").charAt(0));
-
-    Part photoPart = request.getPart("photo");
-    if (photoPart.getSize() > 0) {
-      String uploadFileUrl = ncpObjectStorageService.uploadFile(
-              "bitcamp-nc7-bucket-26", "member/", photoPart);
-      m.setPhoto(uploadFileUrl);
-    }
-
     try {
-      memberDao.insert(m);
-      sqlSessionFactory.openSession(false).commit();
-      response.sendRedirect("list");
+      Member member = new Member();
+      member.setNo(Integer.parseInt(request.getParameter("no")));
+      member.setName(request.getParameter("name"));
+      member.setEmail(request.getParameter("email"));
+      member.setPassword(request.getParameter("password"));
+      member.setGender(request.getParameter("gender").charAt(0));
+
+      Part photoPart = request.getPart("photo");
+      if (photoPart.getSize() > 0) {
+        String uploadFileUrl = ncpObjectStorageService.uploadFile(
+                "bitcamp-nc7-bucket-26", "member/", photoPart);
+        member.setPhoto(uploadFileUrl);
+      }
+
+      if (memberDao.update(member) == 0) {
+        throw new Exception("회원이 없습니다.");
+      } else {
+        sqlSessionFactory.openSession(false).commit();
+        response.sendRedirect("list");
+      }
 
     } catch (Exception e) {
       sqlSessionFactory.openSession(false).rollback();
-
-      request.setAttribute("exception", e);
-      request.setAttribute("message", "회원 등록 오류!");
       request.setAttribute("refresh", "2;url=list");
-      request.getRequestDispatcher("/error.jsp").forward(request, response);
+      throw new ServletException(e);
     }
   }
 }
