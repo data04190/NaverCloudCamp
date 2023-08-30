@@ -19,7 +19,7 @@
     <p>해당 번호의 회원이 없습니다!</p>
 </c:if>
 <c:if test="${not empty member}">
-  <form action='/member/update' method='post' enctype='multipart/form-data'>
+  <form action='update' method='post' enctype='multipart/form-data'>
   <table border='1'>
   <tr>
       <th style='width:120px;'>사진</th>
@@ -28,8 +28,8 @@
           <img style='height:80px' src='/images/avatar.png'>
         </c:if>
         <c:if test="${not empty member.photo}">
-          <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-26/member/${member.photo}'>
-            <img src='http://kgddbipzoniy19010732.cdn.ntruss.com/member/${member.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg'>
+          <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-118/member/${member.photo}'>
+            <img src='http://mvsenqskbqzl19010704.cdn.ntruss.com/member/${member.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg'>
           </a>
         </c:if>
           <input type='file' name='photo'></td></tr>
@@ -54,8 +54,8 @@
   <div>
   <button>변경</button>
   <button type='reset'>초기화</button>
-      <a href='/member/delete?no=${member.no}'>삭제</a>
-  <a href='/member/list'>목록</a>
+      <a href='delete?no=${member.no}'>삭제</a>
+  <a href='list'>목록</a>
   </div>
   </form>
 </c:if>
