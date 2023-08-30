@@ -42,8 +42,11 @@ dependencies {
   // Amazon AWS Java SDK s3
   implementation 'com.amazonaws:aws-java-sdk-s3:1.12.530'
 
-// JSTL 라이브러리
+  // JSTL 라이브러리
   implementation 'jstl:jstl:1.2'
+
+    // Sprint IoC 컨테이너 라이브러리
+    implementation 'org.springframework:spring-context:6.0.11'
 
 
 }
