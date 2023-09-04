@@ -1,11 +1,11 @@
 package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.util.TransactionTemplate;
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 
@@ -22,15 +22,14 @@ public class DefaultBoardService implements BoardService {
 
   @Override
   public int add(Board board) throws Exception {
-   return txTemplate.execute(status ->  {
-        int count = boardDao.insert(board);
-        if (board.getAttachedFiles().size() > 0) {
-          boardDao.insertFiles()
-        }
-          return rv;
+    return txTemplate.execute(status -> {
+      int count = boardDao.insert(board);
+      if (board.getAttachedFiles().size() > 0) {
+        boardDao.insertFiles(board);
+      }
+      return count;
     });
   }
-
 
   @Override
   public List<Board> list(int category) throws Exception {
@@ -57,11 +56,9 @@ public class DefaultBoardService implements BoardService {
   public int delete(int boardNo) throws Exception {
     return txTemplate.execute(status -> {
       boardDao.deleteFiles(boardNo);
-      int count = boardDao.delete(boardNo);
-      return count;
+      return boardDao.delete(boardNo);
     });
   }
-
 
   @Override
   public int increaseViewCount(int boardNo) throws Exception {

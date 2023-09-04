@@ -1,14 +1,10 @@
 package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.MemberDao;
-import bitcamp.myapp.util.TransactionCallback;
-import bitcamp.myapp.util.TransactionTemplate;
 import bitcamp.myapp.vo.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 
@@ -16,7 +12,7 @@ import java.util.List;
 public class DefaultMemberService implements MemberService {
 
   MemberDao memberDao;
-  TransactionCallback txTemplate;
+  TransactionTemplate txTemplate;
 
   public DefaultMemberService(MemberDao memberDao, PlatformTransactionManager txManager) {
     this.memberDao = memberDao;
@@ -45,7 +41,6 @@ public class DefaultMemberService implements MemberService {
 
   @Override
   public int update(Member member) throws Exception {
-
     return txTemplate.execute(status -> memberDao.update(member));
   }
 
