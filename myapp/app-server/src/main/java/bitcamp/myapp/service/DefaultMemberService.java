@@ -1,6 +1,8 @@
 package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.MemberDao;
+import bitcamp.myapp.util.TransactionCallback;
+import bitcamp.myapp.util.TransactionTemplate;
 import bitcamp.myapp.vo.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -14,28 +16,16 @@ import java.util.List;
 public class DefaultMemberService implements MemberService {
 
   MemberDao memberDao;
-  PlatformTransactionManager txManager;
+  TransactionCallback txTemplate;
 
   public DefaultMemberService(MemberDao memberDao, PlatformTransactionManager txManager) {
     this.memberDao = memberDao;
-    this.txManager = txManager;
+    txTemplate = new TransactionTemplate(txManager);
   }
 
   @Override
   public int add(Member member) throws Exception {
-    DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-    def.setName("tx1");
-    def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-    TransactionStatus status = txManager.getTransaction(def);
-
-    try {
-      int count = memberDao.insert(member);
-      txManager.commit(status);
-      return count;
-    } catch (Exception e) {
-      txManager.rollback(status);
-      throw e;
-    }
+    return txTemplate.execute(status -> memberDao.insert(member));
   }
 
   @Override
@@ -55,35 +45,12 @@ public class DefaultMemberService implements MemberService {
 
   @Override
   public int update(Member member) throws Exception {
-    DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-    def.setName("tx1");
-    def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-    TransactionStatus status = txManager.getTransaction(def);
 
-    try {
-      int count = memberDao.update(member);
-      txManager.commit(status);
-      return count;
-    } catch (Exception e) {
-      txManager.rollback(status);
-      throw e;
-    }
+    return txTemplate.execute(status -> memberDao.update(member));
   }
 
   @Override
   public int delete(int memberNo) throws Exception {
-    DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-    def.setName("tx1");
-    def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-    TransactionStatus status = txManager.getTransaction(def);
-
-    try {
-      int count = memberDao.delete(memberNo);
-      txManager.commit(status);
-      return count;
-    } catch (Exception e) {
-      txManager.rollback(status);
-      throw e;
-    }
+    return txTemplate.execute(status -> memberDao.delete(memberNo));
   }
 }
