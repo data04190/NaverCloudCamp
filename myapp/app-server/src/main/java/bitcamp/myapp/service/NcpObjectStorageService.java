@@ -1,9 +1,5 @@
 package bitcamp.myapp.service;
 
-import java.io.InputStream;
-import java.util.UUID;
-import javax.servlet.http.Part;
-
 import bitcamp.myapp.config.NcpConfig;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -14,6 +10,10 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.Part;
+import java.io.InputStream;
+import java.util.UUID;
 
 @Component
 public class NcpObjectStorageService {
