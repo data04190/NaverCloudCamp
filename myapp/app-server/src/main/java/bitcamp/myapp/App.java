@@ -26,12 +26,13 @@ public class App {
     Connector connector = tomcat.getConnector();
     connector.setURIEncoding("UTF-8");
 
-    // 톰캣 서버에 배포할 웹 애플리케이션을 등록
+    // 톰캣 서버에 배포할 웹 애플리케이션을 등록한다.
     // 리턴 값: 등록된 웹 애플리케이션 정보
     StandardContext ctx = (StandardContext) tomcat.addWebapp(
         "/", // 컨텍스트 경로(웹 애플리케이션 경로)
         new File("app-server/src/main/webapp").getAbsolutePath() // 웹 애플리케이션 파일이 있는 실제 경로
         );
+
     // 자바 클래스 파일이 갱신되었을 때 해당 파일을 자동으로 다시 로딩하게 설정.
     ctx.setReloadable(true);
 

@@ -20,6 +20,12 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.1-jre'
+
+    // Mybatis의 Spring 연동 라이브러리
+    implementation 'org.mybatis:mybatis-spring:3.0.2'
+
+    //Mybatis 라이브러리
+    implementation 'org.mybatis:mybatis:3.5.13'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

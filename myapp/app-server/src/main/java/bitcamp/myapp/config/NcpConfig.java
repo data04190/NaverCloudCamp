@@ -1,6 +1,5 @@
 package bitcamp.myapp.config;
 
-
 public class NcpConfig {
   private String endPoint = "https://kr.object.ncloudstorage.com";
   private String regionName = "kr-standard";

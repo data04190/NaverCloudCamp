@@ -3,7 +3,6 @@ package bitcamp.myapp.servlet;
 import bitcamp.myapp.config.AppConfig;
 import bitcamp.myapp.config.NcpConfig;
 import bitcamp.myapp.controller.PageController;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.servlet.ServletException;
@@ -28,8 +27,11 @@ public class DispatcherServlet extends HttpServlet {
     System.out.println("DispatcherServlet.init() 호출됨!");
     iocContainer = new AnnotationConfigApplicationContext(AppConfig.class, NcpConfig.class);
 
-    SqlSessionFactory sqlSessionFactory = iocContainer.getBean(SqlSessionFactory.class);
-    this.getServletContext().setAttribute("sqlSessionFactory", sqlSessionFactory);
+//    String[] names = iocContainer.getBeanDefinitionNames();
+//    for (String name : names) {
+//      System.out.printf("=> %s\n", iocContainer.getBean(name).getClass().getName());
+//    }
+
   }
 
   @Override
@@ -41,9 +43,6 @@ public class DispatcherServlet extends HttpServlet {
 
     // 클라이언트가 요청한 페이지 컨트롤러를 찾는다.
     PageController pageController = (PageController) iocContainer.getBean(pageControllerPath);
-    if (pageController == null) {
-      throw new ServletException("해당 요청을 처리할 수 없습니다!");
-    }
 
     // 페이지 컨트롤러를 실행한다.
     try {

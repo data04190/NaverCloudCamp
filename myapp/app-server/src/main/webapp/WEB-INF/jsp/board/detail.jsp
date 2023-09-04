@@ -24,7 +24,6 @@
 
 <c:if test="${not empty board}">
     <form action='update' method='post' enctype='multipart/form-data'>
-    <input type='hidden' name='category' value='${board.category}'>
     <table border='1'>
     <tr><th style='width:120px;'>번호</th>
     <td style='width:300px;'><input type='text' name='no' value='${board.no}' readonly></td></tr>
@@ -37,8 +36,8 @@
     <tr><th>등록일</th> <td>${simpleDateFormatter.format(board.createdDate)}</td></tr>
     <tr><th>첨부파일</th><td>
     <c:forEach items="${board.attachedFiles}" var="file">
-        <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-26/board/${file.filePath}'>${file.filePath}</a>
-        [<a href='fileDelete?category=${param.category}&no=${file.no}'>삭제</a>]<br>
+        <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-118/board/${file.filePath}'>${file.filePath}</a>
+        [<a href='fileDelete?no=${file.no}'>삭제</a>]<br>
     </c:forEach>
         <input type='file' name='files' multiple>
     </td></tr>
@@ -47,8 +46,8 @@
     <div>
     <button>변경</button>
     <button type='reset'>초기화</button>
-    <a href='delete?category=${param.category}&no=${param.no}'>삭제</a>
-    <a href='list?category=${param.category}'>목록</a>
+    <a href='delete?category=${board.category}&no=${board.no}'>삭제</a>
+    <a href='list?category=${board.category}'>목록</a>
     </div>
     </form>
 </c:if>
