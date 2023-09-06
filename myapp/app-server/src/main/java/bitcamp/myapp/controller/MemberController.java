@@ -13,6 +13,10 @@ import java.util.Map;
 @Controller
 public class MemberController {
 
+  {
+    System.out.println("MemberController 생성됨!");
+  }
+
   @Autowired
   MemberService memberService;
 
@@ -34,7 +38,7 @@ public class MemberController {
       System.out.println(member);
       if (photofile.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                "bitcamp-nc7-bucket-26", "member/", photofile);
+                "bitcamp-nc7-bucket-118", "member/", photofile);
         member.setPhoto(uploadFileUrl);
       }
       memberService.add(member);
@@ -86,7 +90,7 @@ public class MemberController {
     try {
       if (photofile.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                "bitcamp-nc7-bucket-26", "member/", photofile);
+                "bitcamp-nc7-bucket-118", "member/", photofile);
         member.setPhoto(uploadFileUrl);
       }
 

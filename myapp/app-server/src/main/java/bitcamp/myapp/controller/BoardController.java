@@ -17,6 +17,10 @@ import java.util.Map;
 @Controller
 public class BoardController {
 
+  {
+    System.out.println("BoardController 생성됨!");
+  }
+
   @Autowired
   BoardService boardService;
 
@@ -148,7 +152,7 @@ public class BoardController {
       for (Part part : files) {
         if (part.getSize() > 0) {
           String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                  "bitcamp-nc7-bucket-26", "board/", part);
+                  "bitcamp-nc7-bucket-26", "student_board/", part);
           AttachedFile attachedFile = new AttachedFile();
           attachedFile.setFilePath(uploadFileUrl);
           attachedFiles.add(attachedFile);

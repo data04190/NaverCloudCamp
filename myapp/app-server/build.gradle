@@ -51,6 +51,9 @@ dependencies {
     // Spring WebMVC 라이브러리
     implementation 'org.springframework:spring-webmvc:5.3.29'
 
+    // AspectJ Weaver 라이브러리
+    implementation 'org.aspectj:aspectjweaver:1.9.20.1'
+
     // Mybatis의 Spring 연동 라이브러리
     implementation 'org.mybatis:mybatis-spring:2.1.1'
     //implementation 'org.mybatis:mybatis-spring:3.0.2' //spring 6.x 버전 지원
