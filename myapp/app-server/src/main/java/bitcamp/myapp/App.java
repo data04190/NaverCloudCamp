@@ -15,15 +15,6 @@ public class App implements WebMvcConfigurer {
     SpringApplication.run(App.class, args);
   }
 
-//  @Bean
-//  public ViewResolver viewResolver() {
-//    InternalResourceViewResolver vr = new InternalResourceViewResolver();
-//    vr.setViewClass(JstlView.class);
-//    vr.setPrefix("/WEB-INF/jsp/");
-//    vr.setSuffix(".jsp");
-//    return vr;
-//  }
-
   @Override
   public void configurePathMatch(PathMatchConfigurer configurer) {
     System.out.println("AppConfig.configurePathMatch() 호출됨!");
@@ -43,4 +34,5 @@ public class App implements WebMvcConfigurer {
 ////            .addInterceptor(new MyInterceptor())
 ////            .addPathPatterns("/c04_1/**");
 //  }
+
 }
